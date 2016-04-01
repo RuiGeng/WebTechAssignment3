@@ -1,9 +1,12 @@
-var cardImgs = [["./imgs/Poker-A.png", "./imgs/Poker-A.png"],
-                ["./imgs/Poker-2.png", "./imgs/Poker-2.png"],
-                ["./imgs/Poker-3.png", "./imgs/Poker-3.png"],
-                ["./imgs/Poker-4.png", "./imgs/Poker-4.png"],
-                ["./imgs/Poker-5.png", "./imgs/Poker-5.png"],
-                ["./imgs/Poker-6.png", "./imgs/Poker-6.png"]
-               ];
+document.addEventListener('DOMContentLoaded', function () {
+    document.getElementById('start').onclick = function () {
+        setInterval(timer, 1000);
+        startGame();
+    };
 
-var backImg = "./imgs/back.png";
+});
+
+function startGame() {
+    var game = new Game();
+    game.initial();
+}

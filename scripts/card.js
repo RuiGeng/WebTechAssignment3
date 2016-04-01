@@ -29,3 +29,22 @@ function Card(id, cardWidth, cardHeight, cardFrontImg, cardBackImg, value) {
         }
     };
 }
+
+
+function cardFactory(cardBackImg, cardFrontImgs, cardsArray) {
+    var backImg = cardBackImg;
+    var frontImg;
+    var id;
+    var i;
+    for (i = 0; i < cardFrontImgs.length; i++) {
+        var firstCardImg = cardFrontImgs[i][0];
+        id = "card" + i + "-" + "0";
+        var firstCard = new Card(window.cardWidth, window.cardHeight, firstCardImg, backImg, i, id);
+        cardsArray.push(firstCard);
+        var secondCardImg = cardFrontImgs[i][1];
+        id = "card" + i + "-" + "1";
+        var secondCard = new Card(window.cardWidth, window.cardHeight, secondCardImg, backImg, i, id);
+        cardsArray.push(secondCard);
+    }
+    return cardsArray;
+}
