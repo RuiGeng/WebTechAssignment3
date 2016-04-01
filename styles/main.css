@@ -1,3 +1,5 @@
+/* Sticky footer styles */
+
 html {
     position: relative;
     min-height: 100%;
@@ -5,7 +7,7 @@ html {
 
 body {
     /* Margin bottom by footer height */
-    margin-bottom: 40px;
+    margin-bottom: 60px;
 }
 
 .footer {
@@ -14,8 +16,11 @@ body {
     width: 100%;
     /* Set the fixed height of the footer here */
     height: 40px;
-    background-color: whitesmoke;
+    background-color: #f5f5f5;
 }
+
+
+/* Custom page CSSstyles */
 
 img {
     padding: 2px;
