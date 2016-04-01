@@ -17,6 +17,7 @@ function Game() {
         this.cards = this.CreateCards(this.backImg, this.cardImgs, this.cards);
     };
 
+    //create a new card array
     this.CreateCards = function (backImg, frontImgs, cards) {
         // create cards
         cards = cardFactory(backImg, frontImgs, cards);
@@ -27,6 +28,7 @@ function Game() {
         return cards;
     };
 
+    //suffer card array
     this.sufferCards = function (cardsArray) {
         var currentIndex = cardsArray.length,
             temporaryValue,
@@ -43,8 +45,22 @@ function Game() {
         return cardsArray;
     };
 
+    this.addElement = function (nodeName) {
+        // create a new img element 
+        var i, j;
+        for (i = 0, j = 1; i < this.cards.length; i++, j++) {
+            var elem = document.createElement("img");
+            elem.className = "col-lg-2 col-md-2 .col-sm-3 col-xs-3";
+            elem.setAttribute("src", this.cards[i].cardBackImg);
+            elem.setAttribute("alt", "Card-" + j);
+            var elemId = this.cards[i].id;
+            elem.setAttribute("id", elemId);
 
-
-
+            var node = document.getElementById(nodeName);
+            node.appendChild(elem);
+            document.getElementById(elemId).addEventListener("click", function (e) {});
+        }
+        return true;
+    };
 
 }

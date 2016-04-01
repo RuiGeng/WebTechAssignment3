@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('start').onclick = function () {
-        setInterval(timer, 1000);
+        //setInterval(timer, 1000);
         startGame();
     };
 
@@ -9,4 +9,5 @@ document.addEventListener('DOMContentLoaded', function () {
 function startGame() {
     var game = new Game();
     game.initial();
+    game.addElement("cardsboard");
 }

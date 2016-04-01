@@ -1,10 +1,6 @@
-function Card(id, cardWidth, cardHeight, cardFrontImg, cardBackImg, value) {
+function Card(id, cardFrontImg, cardBackImg, value) {
     //card id
     this.id = id;
-    //card width
-    this.cardWidth = cardWidth;
-    //car height
-    this.cardHeight = cardHeight;
     //the img path of card front side
     this.cardFrontImg = cardFrontImg;
     //the img path of card back side
@@ -39,11 +35,11 @@ function cardFactory(cardBackImg, cardFrontImgs, cardsArray) {
     for (i = 0; i < cardFrontImgs.length; i++) {
         var firstCardImg = cardFrontImgs[i][0];
         id = "card" + i + "-" + "0";
-        var firstCard = new Card(window.cardWidth, window.cardHeight, firstCardImg, backImg, i, id);
+        var firstCard = new Card(id, firstCardImg, backImg, i);
         cardsArray.push(firstCard);
         var secondCardImg = cardFrontImgs[i][1];
         id = "card" + i + "-" + "1";
-        var secondCard = new Card(window.cardWidth, window.cardHeight, secondCardImg, backImg, i, id);
+        var secondCard = new Card(id, secondCardImg, backImg, i);
         cardsArray.push(secondCard);
     }
     return cardsArray;

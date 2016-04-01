@@ -19,15 +19,13 @@ body {
     background-color: #f5f5f5;
 }
 
-
-/* Custom page CSSstyles */
-
 img {
-    padding: 2px;
-    background-color: lightblue;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 
 div.cards {
     display: block;
-    margin: 10px;
+    margin: 20px;
+    background-color: lightblue;
 }
