@@ -21,7 +21,8 @@ function Game() {
     var self = this;
 
     this.initial = function () {
-        this.cards = this.CreateCards(backImg, cardImgs, cards);
+        this.resetMemory();
+        self.cards = this.CreateCards(backImg, cardImgs, cards);
     };
 
     //create a new card array
@@ -66,11 +67,19 @@ function Game() {
             var node = document.getElementById(nodeName);
             node.appendChild(elem);
             document.getElementById(elemId).addEventListener("click", function (e) {
+                updateClickCount();
                 self.chooseCard(e, self.cards)
             });
         }
     };
 
+
+    this.removeElement = function (nodeName) {
+        var elem = document.getElementById(nodeName);
+        while (elem.hasChildNodes()) {
+            elem.removeChild(elem.lastChild);
+        }
+    };
     this.chooseCard = function (evnent, cardsArray) {
         var i;
         if (clickCount >= 2) {
@@ -112,10 +121,8 @@ function Game() {
         cards[firstcard].isMatched = true;
         cards[secondcard].isOpened = true;
         cards[firstcard].isOpened = true;
-        window.matchCount++;
-        document.getElementById("matchinfor").innerHTML = String(window.matchCount);
+        updateMatchCount();
         self.resetMemory();
-
     };
 
     this.setNotMatched = function () {
