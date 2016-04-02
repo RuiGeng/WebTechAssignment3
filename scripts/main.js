@@ -2,6 +2,9 @@ var totalTime = 0;
 var matchCount = 0;
 var clickCount = 0;
 var timeHandler;
+var minutes;
+var seconds;
+var game;
 
 document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('start').onclick = function () {
@@ -18,19 +21,29 @@ function reStart() {
     if (timeHandler) {
         clearInterval(timeHandler);
     }
-    document.getElementById("matchinfor").innerHTML = String(window.matchCount);
-    document.getElementById("clickinfor").innerHTML = String(window.clickCount);
+    updateHtml();
 }
 
 function updateMatchCount() {
     window.matchCount++;
-    document.getElementById("matchinfor").innerHTML = String(window.matchCount);
-
+    updateHtml();
+    if (matchCount == 6) {
+        endGame();
+    }
 }
 
 function updateClickCount() {
     window.clickCount++;
+    updateHtml();
+}
+
+function updateHtml() {
+    document.getElementById("matchinfor").innerHTML = String(window.matchCount);
     document.getElementById("clickinfor").innerHTML = String(window.clickCount);
+    if (document.getElementById("gameresult").classList.contains("show")) {
+        document.getElementById("gameresult").classList.remove("show");
+        document.getElementById("gameresult").classList.add("hidden");
+    }
 }
 
 function pad(val) {
@@ -44,13 +57,27 @@ function pad(val) {
 
 function timer() {
     window.totalTime++;
-    document.getElementById("seconds").innerHTML = pad(window.totalTime % 60);
-    document.getElementById("minutes").innerHTML = pad(parseInt(window.totalTime / 60));
+    window.minutes = pad(parseInt(window.totalTime / 60));
+    window.seconds = pad(window.totalTime % 60);
+    document.getElementById("seconds").innerHTML = window.seconds;
+    document.getElementById("minutes").innerHTML = window.minutes;
 }
 
 function startGame() {
-    var game = new Game();
-    game.initial();
-    game.removeElement("cardsboard");
-    game.addElement("cardsboard");
+    window.game = new Game();
+    window.game.initial();
+    window.game.removeElement("cardsboard");
+    window.game.addElement("cardsboard");
+}
+
+function endGame() {
+    clearInterval(timeHandler);
+    window.game.removeElement("cardsboard");
+    document.getElementById("fseconds").innerHTML = window.seconds;
+    document.getElementById("fminutes").innerHTML = window.minutes;
+    document.getElementById("fclick").innerHTML = window.clickCount;
+    if (document.getElementById("gameresult").classList.contains("hidden")) {
+        document.getElementById("gameresult").classList.remove("hidden");
+        document.getElementById("gameresult").classList.add("show");
+    }
 }

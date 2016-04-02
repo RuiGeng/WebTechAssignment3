@@ -20,19 +20,25 @@
         <div class="row">
             <div class="text-center">
                 <div>
-                    <p>Click on two cards to find out the matching cards.</p>
+                    <p class="lead">Click on two cards to find out the matching cards.</p>
                 </div>
-                <div class="text-center">
-                    <p class="col-lg-4">Number of Matches: <span id="matchinfor">0</span></p>
-                    <p class="col-lg-4">Number of Clicks: <span id="clickinfor">0</span></p>
-                    <p class="col-lg-4">Current time: <span id="minutes">00</span>:<span id="seconds">00</span></p>
+                <div id="gameinfor" class="text-center">
+                    <p class="col-lg-4 col-md-4 col-sm-4 lead">Number of Matches: <span id="matchinfor" class="label label-success">0</span></p>
+                    <p class="col-lg-4 col-md-4 col-sm-4 lead">Current Time: <span class="label label-warning"><span id="minutes">00</span>:<span id="seconds">00</span></span>
+                    </p>
+                    <p class="col-lg-4 col-md-4 col-sm-4 lead">Number of Clicks: <span id="clickinfor" class="label label-info">0</span></p>
                 </div>
                 <div>
-                    <button id="start" class="btn btn-primary">Game Start</button>
+                    <button id="start" class="btn btn-primary btn-lg">Start Game</button>
                 </div>
             </div>
         </div>
         <div id="cardsboard" class="row cards">
+        </div>
+        <div id="gameresult" class="row text-center hidden">
+            <h2>Congratulations!</h2>
+            <h3>Your Speed : <span id="fminutes">00</span>:<span id="fseconds">00</span></h3>
+            <h3>You Have Clicked : <span id="fclick"></span></h3>
         </div>
     </div>
 

@@ -58,7 +58,7 @@ function Game() {
         var i, j;
         for (i = 0, j = 1; i < cards.length; i++, j++) {
             var elem = document.createElement("img");
-            elem.className = "col-lg-2 col-md-2 .col-sm-3 col-xs-3";
+            elem.className = "col-lg-2 col-md-2 col-sm-3 col-xs-3";
             elem.setAttribute("src", cards[i].cardBackImg);
             elem.setAttribute("alt", "Card-" + j);
             var elemId = cards[i].id;
@@ -73,13 +73,13 @@ function Game() {
         }
     };
 
-
     this.removeElement = function (nodeName) {
         var elem = document.getElementById(nodeName);
         while (elem.hasChildNodes()) {
             elem.removeChild(elem.lastChild);
         }
     };
+
     this.chooseCard = function (evnent, cardsArray) {
         var i;
         if (clickCount >= 2) {
