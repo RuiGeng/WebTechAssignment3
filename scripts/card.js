@@ -1,4 +1,4 @@
-function Card(id, cardFrontImg, cardBackImg, value) {
+var Card = function (id, cardFrontImg, cardBackImg, value) {
     //card id
     this.id = id;
     //the img path of card front side
@@ -26,20 +26,19 @@ function Card(id, cardFrontImg, cardBackImg, value) {
     };
 }
 
-
-function cardFactory(cardBackImg, cardFrontImgs, cardsArray) {
-    var backImg = cardBackImg;
-    var frontImg;
-    var id;
-    var i;
-    for (i = 0; i < cardFrontImgs.length; i++) {
-        var firstCardImg = cardFrontImgs[i][0];
-        id = "card" + i + "-" + "0";
-        var firstCard = new Card(id, firstCardImg, backImg, i);
+var CardFactory = function (cardBackImg, cardFrontImgs, cardsArray) {
+    this.backImg = cardBackImg;
+    this.frontImgs = cardFrontImgs;
+    this.id;
+    this.i;
+    for (this.i = 0; this.i < this.frontImgs.length; this.i++) {
+        var firstCardImg = this.frontImgs[this.i][0];
+        this.id = "card" + this.i + "-" + "0";
+        var firstCard = new Card(this.id, firstCardImg, this.backImg, this.i);
         cardsArray.push(firstCard);
-        var secondCardImg = cardFrontImgs[i][1];
-        id = "card" + i + "-" + "1";
-        var secondCard = new Card(id, secondCardImg, backImg, i);
+        var secondCardImg = this.frontImgs[this.i][1];
+        this.id = "card" + this.i + "-" + "1";
+        var secondCard = new Card(this.id, secondCardImg, this.backImg, this.i);
         cardsArray.push(secondCard);
     }
     return cardsArray;
