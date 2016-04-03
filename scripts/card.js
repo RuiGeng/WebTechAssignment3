@@ -26,19 +26,21 @@ var Card = function (id, cardFrontImg, cardBackImg, value) {
     };
 }
 
-var CardFactory = function (cardBackImg, cardFrontImgs, cardsArray) {
-    this.backImg = cardBackImg;
-    this.frontImgs = cardFrontImgs;
-    this.id;
-    this.i;
-    for (this.i = 0; this.i < this.frontImgs.length; this.i++) {
-        var firstCardImg = this.frontImgs[this.i][0];
-        this.id = "card" + this.i + "-" + "0";
-        var firstCard = new Card(this.id, firstCardImg, this.backImg, this.i);
+var CardFactory = function (cardBackImg, cardFrontImgs) {
+    var cardsArray = [];
+    var id;
+    var i;
+
+    //make two same frontImgs cards and make diffrent id 
+    //then put into array one time
+    for (i = 0; i < cardFrontImgs.length; i++) {
+        var firstCardImg = cardFrontImgs[i][0];
+        id = "card" + i + "-" + "0";
+        var firstCard = new Card(id, firstCardImg, cardBackImg, i);
         cardsArray.push(firstCard);
-        var secondCardImg = this.frontImgs[this.i][1];
-        this.id = "card" + this.i + "-" + "1";
-        var secondCard = new Card(this.id, secondCardImg, this.backImg, this.i);
+        var secondCardImg = cardFrontImgs[i][1];
+        id = "card" + i + "-" + "1";
+        var secondCard = new Card(id, secondCardImg, cardBackImg, i);
         cardsArray.push(secondCard);
     }
     return cardsArray;

@@ -26,10 +26,10 @@ var Game = function () {
     //create a new card array
     this.CreateCards = function (backImg, frontImgs, cards) {
         // create cards
-        this.cards = new CardFactory(backImg, frontImgs, cards);
+        cards = new CardFactory(backImg, frontImgs);
 
         // suffle the cards
-        this.cards = this.sufferCards(cards);
+        cards = this.sufferCards(cards);
 
         return cards;
     };
