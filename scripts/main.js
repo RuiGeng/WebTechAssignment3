@@ -11,20 +11,19 @@ var backImg = "./imgs/back.png";
 
 document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('start').onclick = function () {
-        var main = new Main();
-        main.reSet();
-        main.startGame();
+        Main.reSet();
+        Main.startGame();
     };
 });
 
-var Main = function () {
-    this.totalTime = 0;
-    this.minutes = 0;
-    this.seconds = 0;
-    var game;
-    this.timeHandler = null;
+var Main = {
+    totalTime: 0,
+    minutes: 0,
+    seconds: 0,
+    game: null,
+    timeHandler: null,
 
-    this.reSet = function () {
+    reSet: function () {
 
         this.totalTime = 0;
         this.minutes = 0;
@@ -33,22 +32,22 @@ var Main = function () {
         if (this.timeHandler) {
             clearInterval(this.timeHandler);
         }
+    },
 
-    };
+    updateHtml: function () {
 
-    this.updateHtml = function () {
         //game end
         if (document.getElementById("gameresult").classList.contains("show")) {
             clearInterval(this.timeHandler);
+        } else {
+            document.getElementById("seconds").innerHTML = this.seconds;
+            document.getElementById("minutes").innerHTML = this.minutes;
+            document.getElementById("fseconds").innerHTML = this.seconds;
+            document.getElementById("fminutes").innerHTML = this.minutes;
         }
+    },
 
-        document.getElementById("seconds").innerHTML = this.seconds;
-        document.getElementById("minutes").innerHTML = this.minutes;
-        document.getElementById("fseconds").innerHTML = this.seconds;
-        document.getElementById("fminutes").innerHTML = this.minutes;
-    };
-
-    this.pad = function (val) {
+    pad: function (val) {
 
         var valString = val + "";
         if (valString.length < 2) {
@@ -57,30 +56,29 @@ var Main = function () {
             return valString;
         }
 
-    };
+    },
 
-    this.timer = function () {
+    timer: function () {
 
         this.totalTime++;
         this.minutes = this.pad(parseInt(this.totalTime / 60));
         this.seconds = this.pad(this.totalTime % 60);
         this.updateHtml();
 
-    };
+    },
 
-    this.startGame = function () {
+    startGame: function () {
         var that = this;
 
-        if (this.timeHandler === null) {
-            this.timeHandler = setInterval(function () {
-                that.timer();
-            }, 1000);
-        }
+        this.timeHandler = setInterval(function () {
+            that.timer();
+        }, 1000);
+
 
         game = new Game("cardsboard", "gameresult", "matchinfor", "clickinfor", "fclick");
         game.initial(window.backImg, window.cardImgs);
         game.addElement();
-    };
+    }
 
     //end the game
     //    this.endGame = function () {
