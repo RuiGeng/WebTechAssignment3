@@ -1,37 +1,50 @@
-var Game = function () {
-    this.firstcard = -1;
-    this.secondcard = -1;
-    this.clickCount = 0;
-    this.firstchoose = true;
-    this.main;
+var Game = function (cardsboardName, gameresultName, matchInforName, clickinforName, finialClickName) {
+    //firstcard index
+    var firstcard = -1;
+    //secondcard index
+    var secondcard = -1;
+    //current clickcout
+    var clickCount = 0;
+    //first time pick up a card flag
+    var firstchoose = true;
 
-    //card front img array 
-    this.cardImgs = [["./imgs/Poker-A.png", "./imgs/Poker-A.png"],
-                ["./imgs/Poker-2.png", "./imgs/Poker-2.png"],
-                ["./imgs/Poker-3.png", "./imgs/Poker-3.png"],
-                ["./imgs/Poker-4.png", "./imgs/Poker-4.png"],
-                ["./imgs/Poker-5.png", "./imgs/Poker-5.png"],
-                ["./imgs/Poker-6.png", "./imgs/Poker-6.png"]
-               ];
-    //card back img
-    this.backImg = "./imgs/back.png";
+    //view cards Board element
+    var elemtCardsBoard = cardsboardName;
+    //view game Result element
+    var elemtGameResult = gameresultName;
+    //view match infor element
+    var elemtMatchInfor = matchInforName;
+    //view match infor element
+    var elemtClickInfor = clickinforName;
+    //view finial click element
+    var elemFinialClickInfor = finialClickName;
+
     // card object array
     this.cards = [];
+    //total click count number
+    this.totalClickCount = 0;
+    //total match count number
+    this.matchCount = 0;
 
-    this.initial = function () {
-        this.resetMemory();
-        this.cards = this.CreateCards(this.backImg, this.cardImgs, this.cards);
+    //initial mathod
+    this.initial = function (img, imgArray) {
+
+        this.resetGame();
+        this.cards = this.CreateCards(img, imgArray);
+        return true;
+
     };
 
     //create a new card array
-    this.CreateCards = function (backImg, frontImgs, cards) {
+    this.CreateCards = function (backImg, frontImgs) {
+
+        var tempCards;
         // create cards
-        cards = new CardFactory(backImg, frontImgs);
-
+        tempCards = new CardFactory(backImg, frontImgs);
         // suffle the cards
-        cards = this.sufferCards(cards);
+        tempCards = this.sufferCards(tempCards);
 
-        return cards;
+        return tempCards;
     };
 
     //suffer card array
@@ -51,10 +64,12 @@ var Game = function () {
         return cardsArray;
     };
 
-    this.addElement = function (nodeName) {
-        // create a new img element 
-        var i, j;
-        var self = this;
+    //add cards to view and bind onclick event
+    this.addElement = function () {
+
+        var i,
+            j,
+            self = this;
 
         for (i = 0, j = 1; i < this.cards.length; i++, j++) {
             var elem = document.createElement("img");
@@ -64,39 +79,37 @@ var Game = function () {
             var elemId = this.cards[i].id;
             elem.setAttribute("id", elemId);
 
-            var node = document.getElementById(nodeName);
+            var node = document.getElementById(elemtCardsBoard);
             node.appendChild(elem);
             document.getElementById(elemId).addEventListener("click", function (e) {
-                self.main.updateClickCount();
-                self.chooseCard(e, self.cards)
+                self.updateClickInfor(elemtClickInfor);
+                self.chooseCard(e, self.cards);
             });
         }
+        return true;
     };
 
-    this.removeElement = function (nodeName) {
-        var elem = document.getElementById(nodeName);
-        while (elem.hasChildNodes()) {
-            elem.removeChild(elem.lastChild);
-        }
-    };
-
+    //choose card mathod
+    //check wether open more then 2 cards
+    //save first open card index, open it
+    //save second open card index, open it, and march with first card
     this.chooseCard = function (evnent, cardsArray) {
         var i;
-        if (this.clickCount >= 2) {
+        if (clickCount >= 2) {
             return false;
         }
         for (i = 0; i < cardsArray.length; i++) {
             var card = cardsArray[i];
             if ((card.id === evnent.target.id) && (card.isOpened !== true) && (card.isMatched !== true)) {
-                this.clickCount++;
-                if (this.firstchoose) {
-                    this.firstcard = i;
-                    this.firstchoose = false;
+                clickCount++;
+                if (firstchoose) {
+                    firstcard = i;
+                    firstchoose = false;
                     card.isOpened = true;
                     card.flipSelf();
                     return true;
                 } else {
-                    this.secondcard = i;
+                    secondcard = i;
                     card.isOpened = true;
                     card.flipSelf();
                     this.matchCard();
@@ -106,10 +119,11 @@ var Game = function () {
         }
     };
 
+    //compare with two cards value
     this.matchCard = function () {
         var self = this;
 
-        if (this.cards[this.secondcard].cardValue === this.cards[this.firstcard].cardValue) {
+        if (this.cards[secondcard].cardValue === this.cards[firstcard].cardValue) {
             this.setMatched();
             return true;
         } else {
@@ -121,28 +135,80 @@ var Game = function () {
     };
 
     this.setMatched = function () {
-        this.cards[this.secondcard].isMatched = true;
-        this.cards[this.firstcard].isMatched = true;
-        this.cards[this.secondcard].isOpened = true;
-        this.cards[this.firstcard].isOpened = true;
-        this.main.updateMatchCount();
+        this.cards[secondcard].isMatched = true;
+        this.cards[firstcard].isMatched = true;
+        this.cards[secondcard].isOpened = true;
+        this.cards[firstcard].isOpened = true;
         this.resetMemory();
+        if (this.updateMatchCount() === 6) {
+            this.endGame();
+        }
     };
 
     this.setNotMatched = function () {
-        this.cards[this.secondcard].isMatched = false;
-        this.cards[this.firstcard].isMatched = false;
-        this.cards[this.firstcard].flipSelf();
-        this.cards[this.secondcard].flipSelf();
-        this.cards[this.secondcard].isOpened = false;
-        this.cards[this.firstcard].isOpened = false;
+        this.cards[secondcard].isMatched = false;
+        this.cards[firstcard].isMatched = false;
+        this.cards[firstcard].flipSelf();
+        this.cards[secondcard].flipSelf();
+        this.cards[secondcard].isOpened = false;
+        this.cards[firstcard].isOpened = false;
         this.resetMemory();
     };
 
-    this.resetMemory = function () {
-        this.firstcard = -1;
-        this.secondcard = -1;
-        this.clickCount = 0;
-        this.firstchoose = true;
+    //remove cards 
+    this.removeElement = function () {
+        var elem = document.getElementById(elemtCardsBoard);
+        while (elem.hasChildNodes()) {
+            elem.removeChild(elem.lastChild);
+        }
     };
-}
+
+    //reset saved information
+    this.resetMemory = function () {
+        firstcard = -1;
+        secondcard = -1;
+        clickCount = 0;
+        firstchoose = true;
+    };
+
+    //update view total click count information
+    this.updateClickInfor = function (inforName) {
+        this.totalClickCount++;
+        document.getElementById(inforName).innerHTML = String(this.totalClickCount);
+    };
+
+    //update view match count information
+    this.updateMatchCount = function () {
+        this.matchCount++;
+        document.getElementById(elemtMatchInfor).innerHTML = String(this.matchCount);
+        return this.matchCount;
+    };
+
+    //end the game
+    this.endGame = function () {
+        this.removeElement();
+        document.getElementById(elemFinialClickInfor).innerHTML = this.totalClickCount;
+        if (document.getElementById(elemtGameResult).classList.contains("hidden")) {
+            document.getElementById(elemtGameResult).classList.remove("hidden");
+            document.getElementById(elemtGameResult).classList.add("show");
+        }
+        this.cards = [];
+        this.totalClickCount = 0;
+        this.matchCount = 0;
+        return true;
+    };
+
+    //reset the game
+    this.resetGame = function () {
+        this.removeElement();
+        if (document.getElementById(elemtGameResult).classList.contains("show")) {
+            document.getElementById(elemtGameResult).classList.remove("show");
+            document.getElementById(elemtGameResult).classList.add("hidden");
+        }
+        this.resetMemory();
+        this.cards = [];
+        this.totalClickCount = 0;
+        this.matchCount = 0;
+        return true;
+    };
+};

@@ -24,7 +24,7 @@ var Card = function (id, cardFrontImg, cardBackImg, value) {
             this.isOpened = false;
         }
     };
-}
+};
 
 var CardFactory = function (cardBackImg, cardFrontImgs) {
     var cardsArray = [];
@@ -44,4 +44,4 @@ var CardFactory = function (cardBackImg, cardFrontImgs) {
         cardsArray.push(secondCard);
     }
     return cardsArray;
-}
+};
