@@ -175,6 +175,7 @@ var Game = function (cardsboardName, gameresultName, matchInforName, clickinforN
     this.updateClickInfor = function (inforName) {
         this.totalClickCount++;
         document.getElementById(inforName).innerHTML = String(this.totalClickCount);
+        return this.totalClickCount;
     };
 
     //update view match count information

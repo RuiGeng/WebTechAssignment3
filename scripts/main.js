@@ -17,12 +17,15 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 var Main = {
+    //total paly time
     totalTime: 0,
     minutes: 0,
     seconds: 0,
+    //game object instance
     game: null,
     timeHandler: null,
 
+    //reset time and timehanlder
     reSet: function () {
 
         this.totalTime = 0;
@@ -34,6 +37,7 @@ var Main = {
         }
     },
 
+    //update the html element, and if the game end then clean the timehanlder
     updateHtml: function () {
 
         //game end
@@ -47,6 +51,7 @@ var Main = {
         }
     },
 
+    //format minutes and seconds
     pad: function (val) {
 
         var valString = val + "";
@@ -58,6 +63,7 @@ var Main = {
 
     },
 
+    //timer
     timer: function () {
 
         this.totalTime++;
@@ -67,6 +73,7 @@ var Main = {
 
     },
 
+    //create a new game and initial it
     startGame: function () {
         var that = this;
 
@@ -79,19 +86,4 @@ var Main = {
         game.initial(window.backImg, window.cardImgs);
         game.addElement();
     }
-
-    //end the game
-    //    this.endGame = function () {
-    //        clearInterval(this.timeHandler);
-    //
-    //        this.game.removeElement("cardsboard");
-    //        document.getElementById("fseconds").innerHTML = this.seconds;
-    //        document.getElementById("fminutes").innerHTML = this.minutes;
-    //        document.getElementById("fclick").innerHTML = this.clickCount;
-    //        if (document.getElementById("gameresult").classList.contains("hidden")) {
-    //            document.getElementById("gameresult").classList.remove("hidden");
-    //            document.getElementById("gameresult").classList.add("show");
-    //        }
-    //    };
-
 };
